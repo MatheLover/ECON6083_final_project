@@ -278,6 +278,56 @@ fit_object <- lm(data = census, formula=form, x=TRUE, y=TRUE)
 
 
 ```
+
+# Result check
+1. To detect if there is any p-hacking issue, we perform some checks. Basically, we adopt advice from (https://michaelwiebe.com/blog/2021/01/amip) and drop 1% of the total observations for checking. In this case, since we have 273 observations, we drop 3 random observations and check whether the coefficient on jinshi density is statistically significant at 1% level.   
+
+Result: it turns out if we randomly drop 3 observations each time and we repeat 1000 times, the coefficient on jinshi density is always 1% statistically significant each time. 
+
+```{r}
+# 1. Significance Check
+counter <- 0
+for (i in 1:1000){
+  dropped_ob <- c(sample(1:274, 3, replace=TRUE))
+  new_census <- census[-dropped_ob,]
+  
+  table_2_col1_v2 <- felm(lneduyear ~ lnjinshipop | provid,data=new_census)
+  
+  if(summary(table_2_col1_v2)$coefficients[1,4] < 0.01){
+    counter <- counter + 1
+  }
+  
+}
+counter # 1000
+
+counter <- 0
+for (i in 1:1000){
+  dropped_ob <- c(sample(1:274, 3, replace=TRUE))
+  new_census <- census[-dropped_ob,]
+  
+  table_2_col1_v2 <- felm(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid,data=new_census)
+  
+  if(summary(table_2_col1_v2)$coefficients[1,4] < 0.01){
+    counter <- counter + 1
+  }
+  
+}
+counter # 1000
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```{r}
 # adaptive lasso 
 # baselinemodel <- glm(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)
