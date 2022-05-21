@@ -61,8 +61,7 @@ Potential Problems
 ```{r}
 # Read and check data 
 census <- read_dta("census10_final.dta")
-census_05 <- read_dta("census05_final.dta")
-fig_02 <- read_dta("figure2.dta")
+
 
 # Check provid
 n_distinct(unique(census$provid)) # 28 provinces
@@ -160,7 +159,25 @@ table_2_col4 <- felm(lneduyear ~ lnjinshipopm+lnnightlight+lncoastdist+tri+suita
 summary(table_2_col4,robust=TRUE)
 stargazer(table_2_col4,type="text", title="Table 2 Column 4")
 
-# Dependent variable 
+# Dependent variable -- Share of population with (* 100, logged)
+table_2_col5 <- felm(lnnspop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
+summary(table_2_col5,robust=TRUE)
+stargazer(table_2_col5,type="text", title="Table 2 Column 5")
+
+table_2_col6 <- felm(lnmppop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
+summary(table_2_col6,robust=TRUE)
+stargazer(table_2_col6,type="text", title="Table 2 Column 6")
+
+table_2_col7 <- felm(lnhighpop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
+summary(table_2_col7,robust=TRUE)
+stargazer(table_2_col6,type="text", title="Table 2 Column 7")
+
+table_2_col8 <- felm(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
+summary(table_2_col8,robust=TRUE)
+stargazer(table_2_col6,type="text", title="Table 2 Column 8")
+
+
+
 
  
 
