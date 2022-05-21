@@ -1,0 +1,308 @@
+---
+title: "Final Project"
+author: "JIANG Rui Chan Yat Tin"
+date: '2022-05-16'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Package
+
+
+```{r cars}
+suppressPackageStartupMessages({
+  library(foreign)
+  library(hdm)
+  library(AER)
+  library(kableExtra)
+})
+# install.packages("haven")
+# install.packages("lfe")
+library(haven)
+library(lfe)
+library(stargazer)
+library(tidyverse)
+library(devtools)
+library(rlist)
+#install.packages("rlist")
+# devtools::install_github("https://github.com/rgiordan/zaminfluence/",
+                           # ref="master",
+                           # subdir="zaminfluence",
+                           # force=TRUE)
+library(zaminfluence)
+# install.packages("plm")
+library(plm)
+library(glmnetUtils)
+# install.packages("asbio")
+# install.packages("rsq")
+library(rsq)
+library(readxl)
+```
+
+# Dataset Checking 
+We need to ensure that data is free from errors. So we check several important variables which may contain outliers and other abnormal values. 
+
+1. provid (in GB code) -- https://sedac.ciesin.columbia.edu/downloads/docs/cddc/gbcodeplist.txt 
+2. lneduyear -- average years of schooling in log scale 
+3. lnjinshipop -- jinshi density 
+4. lnjurenpop -- juren density
+5. lnnspop -- Share of population with no education
+6. lnmppop -- Share of population with elementary and secondary school education
+7. lnpopqing -- population density 
+8. lnofficialqing -- number of qing official in log scale 
+
+Potential Problems
+1. Why is the number of qing officials can be 0.x sth if we use the min lnofficialqing to calculate? 
+2. We are provided with jinshi density directly and cannot verify the raw data on jinshi populations as well as total populations in each prefecture and check whether jinshi density is calculated accurately. This is the conundrum we cannot solve and the following regressions are based on the assumption that jinshi and population data are 100% correct and jinshi density is calculated 100% accurately.  
+
+```{r}
+# Read and check data 
+census <- read_dta("census10_final.dta")
+census_05 <- read_dta("census05_final.dta")
+fig_02 <- read_dta("figure2.dta")
+
+# Check provid
+n_distinct(unique(census$provid)) # 28 provinces
+unique(census$provid) # making sense 
+a <- aggregate(census, by=list(census$provid), FUN=length)
+n_distinct(unique(census$prefid)) # 272 municipalities
+
+# Check lneduyear
+summary(census$lneduyear)
+# 5.62 yrs
+exp(min(census$lneduyear)) 
+# 11.71 yrs approaching 12 (Since 1986, nine years of education has been mandatory for all Chinese children)
+exp(max(census$lneduyear)) 
+
+# Check jinshi density
+# Note: Prefecture -- 府 e.g. 廣州府 in Canton Province, China
+# jinshi density = # of jinshi at that prefecture / # of population at that prefecture
+# variable meaning -- per 10000
+# Min 0 Max 3.9586 
+summary(census$lnjinshipop) 
+lnjinshipop_sorted_desc <- as.data.frame(sort(census$lnjinshipop, decreasing = TRUE))
+exp(min(census$lnjinshipop)) # 1 per 10000
+exp(max(census$lnjinshipop)) # 52.384 per 10000
+
+# Check juren density 
+summary(census$lnjurenpop) 
+lnjurenpop_sorted_desc <- as.data.frame(sort(census$lnjurenpop, decreasing = TRUE))
+exp(min(census$lnjurenpop)) # 1
+exp(max(census$lnjurenpop)) # 365.3902
+
+# Check Shengyuan 
+summary(census$lnshengyuanpop) 
+lnshengyuanpop_sorted_desc <- as.data.frame(sort(census$lnshengyuanpop, decreasing = TRUE))
+exp(min(census$lnshengyuanpop)) 
+exp(max(census$lnshengyuanpop)) # 338.7812
+
+# print colname 
+relevant_var <- as.data.frame(colnames(census)[1:64])
+
+# lnnspop Share of population with no education
+summary(census$lnnspop) # min -0.3013 max 3.3877
+exp(min(census$lnnspop)) # 0.7398606%
+exp(max(census$lnnspop)) # 29.59724%
+
+# lnmppop Share of population with elementary and secondary school education
+summary(census$lnmppop) # min 3.764  max 4.436  
+exp(min(census$lnmppop)) # 43.10818%
+exp(max(census$lnmppop)) # 84.4415%
+
+# population density 
+summary(census$lnpopqing)
+exp(min(census$lnpopqing)) # 0.24
+exp(max(census$lnpopqing)) # 606 
+
+# qing official 
+summary(census$lnofficialqing)
+# Why is number of people 0.x sth? 
+exp(min(census$lnofficialqing)) # 0.27
+exp(max(census$lnofficialqing)) # 288 
+
+
+```
+
+# Replication(original regression)
+1. Mainly we try to replicate the most important baseline regressions in table 2
+
+Since original codes are written in Stata, we need to convert them to R. To run regressions with fixed effects, we have many alternatives :
+
+A. Use felm() method 
+
+B. Use lm() method and factor() provid as FEs
+
+We will implement based on felm() approach.  
+```{r}
+# baseline regressions -- table 2 
+# Dependent var -- average years of schooling (logged) 
+# table 2 column 1
+table_2_col1 <- felm(lneduyear ~ lnjinshipop | provid ,data=census)
+summary(table_2_col1,robust=TRUE)
+a <- stargazer(table_2_col1,type="text", title="Table 2 Column 1")
+
+# table 2 column 2
+table_2_col2 <- felm(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri| provid ,data=census)
+summary(table_2_col2,robust=TRUE)
+b <- stargazer(table_2_col2,type="text", title="Table 2 Column 2")
+
+# table 2 column 3
+# lnpopming result is strange a litte bit 
+table_2_col3 <- felm(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
+summary(table_2_col3,robust=TRUE)
+stargazer(table_2_col3,type="text", title="Table 2 Column 3")
+
+# table 2 column 4
+table_2_col4 <- felm(lneduyear ~ lnjinshipopm+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
+summary(table_2_col4,robust=TRUE)
+stargazer(table_2_col4,type="text", title="Table 2 Column 4")
+
+# Dependent variable 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# robustness check -- drop 1% of the data https://michaelwiebe.com/blog/2021/01/amip
+counter <- 0
+for (i in 1:1000){
+  dropped_ob <- c(sample(1:274, 3, replace=TRUE))
+  new_census <- census[-dropped_ob,]
+  
+  table_2_col1_v2 <- lm(y ~ x + factor(provid) - 1,data=new_census)
+    #felm(lneduyear ~ lnjinshipop | provid,data=new_census)
+  
+  if(summary(table_2_col1_v2)$coefficients[1,4] < 0.01){
+    counter <- counter + 1
+  }
+  
+}
+counter
+
+
+counter_2 <- 0
+p_val_list <- list()
+drop_var <- list()
+for (i in 1:274){
+  dropped_ob <- c(1:i)
+  new_census <- census[-dropped_ob,]
+  
+  table_2_col1_v2 <- felm(lneduyear ~ lnjinshipop | provid,data=new_census)
+  p_val_list <- list.append(p_val_list,summary(table_2_col1_v2)$coefficients[,4])
+  drop_var <- list.append(drop_var, i)
+  
+  if(summary(table_2_col1_v2)$coefficients[,4] < 0.01){
+    counter_2 <- counter_2 + 1
+  }
+  
+}
+p_val_table <- cbind(p_val_list,drop_var)
+counter_2
+
+# Use AMIP algorithm
+y <- census$lneduyear 
+x <- census$lnjinshipop
+form <- formula("y ~ x + factor(provid)")
+summary(lm(y ~ x + factor(provid) - 1,data=census))
+data_panel <- pdata.frame(census, index=c("provid"))
+fixed <- plm(y ~ x,data=data_panel, model="within")
+summary(fixed)
+reg_fit <- lm(data = census, formula=form, x=TRUE, y=TRUE)
+summary(reg_fit)
+
+
+fit_object <- lm(data = census, formula=form, x=TRUE, y=TRUE)
+# new_census <- census[-c(32, 109,263),]
+# table_2_col1_v2 <- felm(lneduyear ~ lnjinshipop | provid,data=new_census)
+# summary(table_2_col1_v2)$coefficients[,4]  
+# table_2_col1_v2$tval
+# stargazer(table_2_col1_v2,type="text", title="Table 2 Column 1")
+
+
+```
+```{r}
+# adaptive lasso 
+# baselinemodel <- glm(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)
+baselinemodel <- glmnet(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,intercept=TRUE,alpha=1,lambda=0.00)
+coef((baselinemodel))
+w=1/abs(coef(baselinemodel)[-1])
+w[1]=0
+w[2:29] = 0
+X=model.matrix(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
+head(X,3)
+y <- census$lneduyear
+cv_lambda_lasso <- cv.glmnet(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
+coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
+post_lasso <- glm(lneduyear~lnjinshipop+factor(provid)+lnnightlight,data=census)
+coef(summary(post_lasso))
+
+
+# lasso
+X=model.matrix(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)
+y <- census$lneduyear
+cv <- cv.glmnet(X, y, alpha = 1)
+lambda_3 <- cv$lambda.1se
+lasso.model <- glmnet(X,y, alpha = 1, lambda = lambda_3)
+lasso.model$beta
+post_lasso <- glm(lneduyear~lnjinshipop+factor(provid)+lnnightlight,data=census)
+
+```
+# Partial R^2
+```{r}
+post_lasso <- glm(lneduyear~lnjinshipop+factor(provid)+lnnightlight,data=census)
+post_lasso_1 <- glm(lneduyear~lnjinshipop+factor(provid),data=census)
+rsq.partial(post_lasso, post_lasso_1)
+
+# Add more 
+income <- read_xlsx("/Users/benchiang/Desktop/Book1.xlsx")
+
+# merge with census data
+merged <- merge(census, income, by="provid")
+table_5 <- lm(lneduyear ~ DISP_INC_CAPITA | provid,data=merged)
+summary(table_5)
+
+
+
+```
+

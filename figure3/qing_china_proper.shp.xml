@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE metadata SYSTEM "http://www.fgdc.gov/metadata/fgdc-std-001-1998.dtd">
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>Center for Historical Geography, Fudan University (Shanghai) and CHGIS, Harvard Yenching Insitute</origin>
+				<pubdate>Apr 2005</pubdate>
+				<title>CHGIS 1820 China Prefectures (GBK)</title>
+				<geoform Sync="TRUE">vector digital data</geoform>
+				<serinfo>
+					<sername>CHGIS, Version: 3.0. Cambridge, MA (USA): Harvard Yenching Institute, Apr 2005</sername>
+				</serinfo>
+				<pubinfo>
+					<pubplace>Cambridge, MA</pubplace>
+					<publish>CHGIS, Harvard Yenching Institute</publish>
+				</pubinfo>
+				<onlink>www.fas.harvard.edu/~chgis</onlink>
+				<lworkcit>
+					<citeinfo>
+						<origin>CHGIS, Harvard Yenching Institute</origin>
+						<title>China Historical Geographic Information System</title>
+						<onlink>www.fas.harvard.edu/~chgis</onlink>
+					</citeinfo>
+				</lworkcit>
+				<ftname Sync="TRUE">1820_pref_pgn_gbk3</ftname></citeinfo>
+		</citation>
+		<descript>
+			<abstract>polygon features showing the prefecture boundaries in China for the year 1820</abstract>
+			<purpose>Developed by Fudan University, Center for Historical Geography, for the CHGIS project.</purpose>
+			<supplinf>GBK encoding</supplinf>
+			<langdata Sync="TRUE">en</langdata></descript>
+		<timeperd>
+			<timeinfo>
+				<sngdate>
+					<caldate>1820</caldate>
+				</sngdate>
+			</timeinfo>
+			<current>based on dated sources, as indicated in the SOURCE NOTES table, included in the CHGIS database</current>
+		</timeperd>
+		<status>
+			<progress>revised (Apr 2005)</progress>
+			<update>will be updated by expanding the database backwards in time, future releases to be announced, with at least one release in 2006</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc Sync="TRUE">69.756578</westbc>
+				<eastbc Sync="TRUE">144.751587</eastbc>
+				<northbc Sync="TRUE">55.923805</northbc>
+				<southbc Sync="TRUE">3.853723</southbc>
+			</bounding>
+			<lboundng><leftbc Sync="TRUE">69.756578</leftbc><rightbc Sync="TRUE">144.751587</rightbc><bottombc Sync="TRUE">3.853723</bottombc><topbc Sync="TRUE">55.923805</topbc></lboundng></spdom>
+		<keywords>
+			<theme>
+				<themekt>Alexandria Digital Library, CHGIS specialized feature type vocabularies</themekt>
+				<themekey>prefecture boundaries, China</themekey>
+			</theme>
+		</keywords>
+		<accconst>The CHGIS datasets are freely distributed for non-commercial academic research purposes. The datasets may be obtained by ordering a CD-ROM or downloaded free of charge from CHGIS websites. See website for more details.</accconst>
+		<useconst>Academic use of CHGIS data is allowed, and encouraged, provided that any derived data or digital images of maps give proper citation to CHGIS as stated above. The CHGIS datasets are distributed for non-commercial academic research purposes only. Any organization or individual that makes commercial or revenue generating use of the CHGIS Datasets must first obtain a licensing agreement from CHGIS Management Committee. Use of the datasets distributed on CD-ROM or downloaded from CHGIS websites implies acceptance of all the terms stated in the End User's License Agreement, and acknowledges understanding of any liabilities stated therein by the end-user.</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>CHGIS, Harvard Yenching Institute</cntorg>
+					<cntper>Merrick Berman</cntper>
+				</cntorgp>
+				<cntpos>Project Manager</cntpos>
+				<cntaddr>
+					<addrtype>mailing address</addrtype>
+					<address>Van Serg 20, 25 Francis Ave</address>
+					<city>Cambridge</city>
+					<state>MA</state>
+					<postal>02138</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>617-384-7380</cntvoice>
+				<cntemail>mberman@fas.harvard.edu</cntemail>
+			</cntinfo>
+		</ptcontac>
+		<datacred>CHGIS, Version: 3.0. Cambridge, MA (USA): Harvard Yenching Institute, Apr 2005.</datacred>
+		<native Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 2; ESRI ArcCatalog 9.2.0.1324</native>
+		<crossref>
+			<citeinfo>
+				<origin>China Historical Geographic Information System</origin>
+				<pubdate>Apr 2005</pubdate>
+				<title>CHGIS, Version: 3.0</title>
+				<geoform>vector digital data</geoform>
+				<serinfo>
+					<sername>China Historical Geographic Information System</sername>
+				</serinfo>
+				<pubinfo>
+					<pubplace>Cambridge, MA</pubplace>
+					<publish>Harvard Yenching Inst</publish>
+				</pubinfo>
+				<othercit>(c) Harvard Yenching Institute
+Cambridge, MA (USA)</othercit>
+				<lworkcit>
+					<citeinfo>
+						<origin>Harvard Yenching Institute</origin>
+						<title>China Historical Geographic Information System</title>
+						<onlink>www.fas.harvard.edu/~chgis</onlink>
+					</citeinfo>
+				</lworkcit>
+			</citeinfo>
+		</crossref>
+		<natvform Sync="TRUE">Shapefile</natvform></idinfo>
+	<spdoinfo>
+		<direct Sync="TRUE">Vector</direct>
+		<ptvctinf>
+			<sdtsterm Name="1820_pref_pgn_gbk3">
+				<sdtstype Sync="TRUE">G-polygon</sdtstype>
+				<ptvctcnt Sync="TRUE">0</ptvctcnt>
+			</sdtsterm>
+			<esriterm Name="1820_pref_pgn_gbk3"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom Sync="TRUE">Polygon</efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">0</efeacnt><spindex Sync="TRUE">FALSE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm></ptvctinf>
+	</spdoinfo>
+	<spref>
+		<horizsys>
+			<geodetic>
+				<horizdn Sync="TRUE">D_Xian_1980</horizdn>
+				<ellips Sync="TRUE">Xian_1980</ellips>
+				<semiaxis Sync="TRUE">6378140.000000</semiaxis>
+				<denflat Sync="TRUE">298.257000</denflat>
+			</geodetic>
+			<cordsysn><geogcsn Sync="TRUE">GCS_Xian_1980</geogcsn><projcsn Sync="TRUE">Xian_1980_GK_Zone_19</projcsn></cordsysn><planar><mapproj><mapprojn Sync="TRUE">Transverse Mercator</mapprojn><transmer><sfctrmer Sync="TRUE">1.000000</sfctrmer><longcm Sync="TRUE">111.000000</longcm><latprjo Sync="TRUE">0.000000</latprjo><feast Sync="TRUE">19500000.000000</feast><fnorth Sync="TRUE">0.000000</fnorth></transmer></mapproj><planci><plance Sync="TRUE">coordinate pair</plance><plandu Sync="TRUE">meters</plandu><coordrep><absres Sync="TRUE">0.000000</absres><ordres Sync="TRUE">0.000000</ordres></coordrep></planci></planar></horizsys>
+	</spref>
+	<eainfo>
+		<detailed Name="1820_pref_pgn_gbk3">
+			<enttyp>
+				<enttypl Sync="TRUE">1820_pref_pgn_gbk3</enttypl>
+				<enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">0</enttypc></enttyp>
+			<attr>
+				<attrlabl Sync="TRUE">FID</attrlabl>
+				<attrdef Sync="TRUE">Internal feature number.</attrdef>
+				<attrdefs Sync="TRUE">ESRI</attrdefs>
+				<attrdomv>
+					<udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom>
+				</attrdomv>
+				<attalias Sync="TRUE">FID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl Sync="TRUE">Shape</attrlabl>
+				<attrdef Sync="TRUE">Feature geometry.</attrdef>
+				<attrdefs Sync="TRUE">ESRI</attrdefs>
+				<attrdomv>
+					<udom Sync="TRUE">Coordinates defining the features.</udom>
+				</attrdomv>
+				<attalias Sync="TRUE">Shape</attalias><attrtype Sync="TRUE">Geometry</attrtype><attwidth Sync="TRUE">0</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl Sync="TRUE">NAME_PY</attrlabl>
+				<attalias Sync="TRUE">NAME_PY</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">40</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">NAME_CH</attrlabl>
+				<attalias Sync="TRUE">NAME_CH</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">30</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">NAME_FT</attrlabl>
+				<attalias Sync="TRUE">NAME_FT</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">30</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">PRES_LOC</attrlabl>
+				<attalias Sync="TRUE">PRES_LOC</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">40</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">TYPE_CH</attrlabl>
+				<attalias Sync="TRUE">TYPE_CH</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">15</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">BEG_YR</attrlabl>
+				<attalias Sync="TRUE">BEG_YR</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">10</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">BEG_RULE</attrlabl>
+				<attalias Sync="TRUE">BEG_RULE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">10</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">END_YR</attrlabl>
+				<attalias Sync="TRUE">END_YR</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">6</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">END_RULE</attrlabl>
+				<attalias Sync="TRUE">END_RULE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">1</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">DYN_PY</attrlabl>
+				<attalias Sync="TRUE">DYN_PY</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">6</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">GEO_SRC</attrlabl>
+				<attalias Sync="TRUE">GEO_SRC</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">1</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">DYN_CH</attrlabl>
+				<attalias Sync="TRUE">DYN_CH</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">20</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">LEV1_PY</attrlabl>
+				<attalias Sync="TRUE">LEV1_PY</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">10</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">LEV1_CH</attrlabl>
+				<attalias Sync="TRUE">LEV1_CH</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">30</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">OBJ_TYPE</attrlabl>
+				<attalias Sync="TRUE">OBJ_TYPE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">20</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SYS_ID</attrlabl>
+				<attalias Sync="TRUE">SYS_ID</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">11</attwidth></attr>
+			<attr><attrlabl Sync="TRUE">COMPILER</attrlabl><attalias Sync="TRUE">COMPILER</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">7</attwidth></attr><attr><attrlabl Sync="TRUE">CHECKER</attrlabl><attalias Sync="TRUE">CHECKER</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">16</attwidth></attr><attr><attrlabl Sync="TRUE">ENT_DATE</attrlabl><attalias Sync="TRUE">ENT_DATE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">10</attwidth></attr><attr><attrlabl Sync="TRUE">X_COORD</attrlabl><attalias Sync="TRUE">X_COORD</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">10</attwidth></attr><attr><attrlabl Sync="TRUE">Y_COORD</attrlabl><attalias Sync="TRUE">Y_COORD</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">12</attwidth></attr><attr><attrlabl Sync="TRUE">AREA</attrlabl><attalias Sync="TRUE">AREA</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">10</attwidth></attr><attr><attrlabl Sync="TRUE">TYPE_PY</attrlabl><attalias Sync="TRUE">TYPE_PY</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">10</attwidth></attr><attr>
+				<attrlabl Sync="TRUE">NOTE_ID</attrlabl>
+				<attalias Sync="TRUE">NOTE_ID</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">19</attwidth><atnumdec Sync="TRUE">5</atnumdec></attr>
+			<attr><attrlabl Sync="TRUE">LEV_RANK</attrlabl><attalias Sync="TRUE">LEV_RANK</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">19</attwidth><atnumdec Sync="TRUE">5</atnumdec></attr><attr><attrlabl Sync="TRUE">GEOCOMP</attrlabl><attalias Sync="TRUE">GEOCOMP</attalias><attrtype Sync="TRUE">Float</attrtype><attwidth Sync="TRUE">13</attwidth><atnumdec Sync="TRUE">11</atnumdec></attr></detailed>
+	</eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Cheng and Tsui Company</cntorg>
+				</cntorgp>
+				<cntaddr>
+					<addrtype>mailing address</addrtype>
+					<address>25 West Street</address>
+					<city>Boston</city>
+					<state>MA</state>
+					<postal>02111</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>617-988-2401</cntvoice>
+				<cntemail>orders@cheng-tsui.com</cntemail>
+			</cntinfo>
+		</distrib>
+		<resdesc>CHGIS - China Historical Geographic Information System</resdesc>
+		<distliab>CHGIS datasets are available for non-commerical academic purposes from CHGIS Harvard Yenching Inst (outside of China) and from the Center for Historical Geography, Fudan University (within China)</distliab>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<transize>1.037</transize>
+					<dssize Sync="TRUE">0.000</dssize></digtinfo>
+			</digform>
+		</stdorder>
+	</distinfo>
+	<metainfo>
+		<metd Sync="TRUE">20070122</metd>
+		<metc>
+			<cntinfo>
+				<cntperp>
+					<cntper>Merrick Berman</cntper>
+					<cntorg>CHGIS</cntorg>
+				</cntperp>
+				<cntaddr>
+					<addrtype>mailing address</addrtype>
+					<address>20 Van Serg Hall, 25 Francis Ave</address>
+					<city>Cambridge</city>
+					<state>MA</state>
+					<postal>02142</postal>
+				</cntaddr>
+				<cntvoice>617-384-7380</cntvoice>
+			</cntinfo>
+		</metc>
+		<metstdn Sync="TRUE">FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv Sync="TRUE">FGDC-STD-001-1998</metstdv>
+		<mettc Sync="TRUE">local time</mettc>
+		<metextns>
+			<onlink>http://www.esri.com/metadata/esriprof80.html</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<metextns>
+			<onlink>http://www.esri.com/metadata/esriprof80.html</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<metextns>
+			<onlink>http://www.esri.com/metadata/esriprof80.html</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<langmeta Sync="TRUE">en</langmeta><metextns><onlink Sync="TRUE">http://www.esri.com/metadata/esriprof80.html</onlink><metprof Sync="TRUE">ESRI Metadata Profile</metprof></metextns></metainfo>
+	<Esri><CreaDate>20191223</CreaDate><CreaTime>12514500</CreaTime><SyncOnce>FALSE</SyncOnce><SyncDate>20070122</SyncDate><SyncTime>14291100</SyncTime><ModDate>20070122</ModDate><ModTime>14291100</ModTime><DataProperties><lineage><Process Name="Copy Features" ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\CopyFeatures" Date="20070122" Time="142911">CopyFeatures 1820_pref_pgn_gbk2_Layer "C:\Documents and Settings\lex\My Documents\A_Anything\v4_working_draft\1820_pref_pgn_gbk3.shp" # 0 0 0</Process></lineage></DataProperties><ArcGISFormat>1.0</ArcGISFormat></Esri><distInfo><distributor><distorTran><onLineSrc><linkage Sync="TRUE">file://</linkage><protocol Sync="TRUE">Local Area Network</protocol><orDesc Sync="TRUE">002</orDesc></onLineSrc><transSize Sync="TRUE">0.000</transSize></distorTran><distorFormat><formatName Sync="TRUE">Shapefile</formatName></distorFormat></distributor></distInfo><dataqual><lineage><procstep><procdesc Sync="TRUE">Dataset copied.</procdesc><srcused Sync="TRUE"></srcused><date Sync="TRUE">20070122</date><time Sync="TRUE">14134500</time></procstep><procstep><procdesc Sync="TRUE">Dataset copied.</procdesc><srcused Sync="TRUE"></srcused><date Sync="TRUE">20070122</date><time Sync="TRUE">14190000</time></procstep><procstep><procdesc Sync="TRUE">Dataset copied.</procdesc><srcused Sync="TRUE"></srcused><date Sync="TRUE">20070122</date><time Sync="TRUE">14271000</time></procstep><procstep><procdesc Sync="TRUE">Dataset copied.</procdesc><srcused Sync="TRUE"></srcused><date Sync="TRUE">20070122</date><time Sync="TRUE">14304600</time></procstep></lineage></dataqual><dataIdInfo><envirDesc Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 2; ESRI ArcCatalog 9.2.0.1324</envirDesc><dataLang><languageCode Sync="TRUE" value="en"></languageCode></dataLang><idCitation><resTitle Sync="TRUE">1820_pref_pgn_gbk3</resTitle><presForm><PresFormCd Sync="TRUE" value="005"></PresFormCd></presForm></idCitation><spatRpType><SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd></spatRpType></dataIdInfo><mdLang><languageCode Sync="TRUE" value="en"></languageCode></mdLang><mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName><mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer><mdChar><CharSetCd Sync="TRUE" value="004"></CharSetCd></mdChar><mdHrLv><ScopeCd Sync="TRUE" value="005"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><refSysInfo><RefSystem><refSysID><identCode Sync="TRUE">Xian_1980_GK_Zone_19</identCode></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><topLvl><TopoLevCd Sync="TRUE" value="001"></TopoLevCd></topLvl><geometObjs Name="1820_pref_pgn_gbk3"><geoObjTyp><GeoObjTypCd Sync="TRUE" value="001"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">0</geoObjCnt></geometObjs></VectSpatRep></spatRepInfo><mdDateSt Sync="TRUE">20070122</mdDateSt></metadata>
