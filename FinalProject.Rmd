@@ -180,9 +180,28 @@ stargazer(table_2_col6,type="text", title="Table 2 Column 8")
 
 IV Regression
 ```{r}
-iv <- ivreg(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
-iv_ROBUST <- coeftest(iv,vcov=vcovHC(iv, type = "HC0"))
-stargazer(iv_ROBUST, type="text")
+# 2SLS
+# col 5
+iv_5 <- ivreg(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)|bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
+iv_ROBUST_5 <- coeftest(iv,vcov=vcovHC(iv, type = "HC0"))
+stargazer(iv_ROBUST_5, type="text")
+
+# col 6
+iv_6 <- ivreg(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
+iv_ROBUST_6 <- coeftest(iv,vcov=vcovHC(iv, type = "HC0"))
+stargazer(iv_ROBUST_6, type="text")
+
+# col 7
+iv_7 <- ivreg(lnhighpop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
+iv_ROBUST_7 <- coeftest(iv,vcov=vcovHC(iv, type = "HC0"))
+stargazer(iv_ROBUST_7, type="text")
+
+# col 8
+iv_8 <- ivreg(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist| lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census)
+iv_ROBUST_8 <- coeftest(iv,vcov=vcovHC(iv, type = "HC0"))
+stargazer(iv_ROBUST_8, type="text")
+
+
 
 # First stage
 first_stage <- lm(lnjinshipop ~ rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census )
