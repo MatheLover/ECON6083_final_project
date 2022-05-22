@@ -176,108 +176,26 @@ table_2_col8 <- felm(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitabi
 summary(table_2_col8,robust=TRUE)
 stargazer(table_2_col6,type="text", title="Table 2 Column 8")
 
+```
 
+IV Regression
+```{r}
+iv <- ivreg(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
+iv_ROBUST <- coeftest(iv,vcov=vcovHC(iv, type = "HC0"))
+stargazer(iv_ROBUST, type="text")
 
+# First stage
+first_stage <- lm(lnjinshipop ~ rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census )
+first_stage <- coeftest(first_stage,vcov=vcovHC(iv, type = "HC0"))
+stargazer(first_stage, type="text")
 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# robustness check -- drop 1% of the data https://michaelwiebe.com/blog/2021/01/amip
-counter <- 0
-for (i in 1:1000){
-  dropped_ob <- c(sample(1:274, 3, replace=TRUE))
-  new_census <- census[-dropped_ob,]
-  
-  table_2_col1_v2 <- lm(y ~ x + factor(provid) - 1,data=new_census)
-    #felm(lneduyear ~ lnjinshipop | provid,data=new_census)
-  
-  if(summary(table_2_col1_v2)$coefficients[1,4] < 0.01){
-    counter <- counter + 1
-  }
-  
-}
-counter
-
-
-counter_2 <- 0
-p_val_list <- list()
-drop_var <- list()
-for (i in 1:274){
-  dropped_ob <- c(1:i)
-  new_census <- census[-dropped_ob,]
-  
-  table_2_col1_v2 <- felm(lneduyear ~ lnjinshipop | provid,data=new_census)
-  p_val_list <- list.append(p_val_list,summary(table_2_col1_v2)$coefficients[,4])
-  drop_var <- list.append(drop_var, i)
-  
-  if(summary(table_2_col1_v2)$coefficients[,4] < 0.01){
-    counter_2 <- counter_2 + 1
-  }
-  
-}
-p_val_table <- cbind(p_val_list,drop_var)
-counter_2
-
-# Use AMIP algorithm
-y <- census$lneduyear 
-x <- census$lnjinshipop
-form <- formula("y ~ x + factor(provid)")
-summary(lm(y ~ x + factor(provid) - 1,data=census))
-data_panel <- pdata.frame(census, index=c("provid"))
-fixed <- plm(y ~ x,data=data_panel, model="within")
-summary(fixed)
-reg_fit <- lm(data = census, formula=form, x=TRUE, y=TRUE)
-summary(reg_fit)
-
-
-fit_object <- lm(data = census, formula=form, x=TRUE, y=TRUE)
-# new_census <- census[-c(32, 109,263),]
-# table_2_col1_v2 <- felm(lneduyear ~ lnjinshipop | provid,data=new_census)
-# summary(table_2_col1_v2)$coefficients[,4]  
-# table_2_col1_v2$tval
-# stargazer(table_2_col1_v2,type="text", title="Table 2 Column 1")
-
+# Second stage
 
 ```
+
+
+
+
 
 # Result check
 1. To detect if there is any p-hacking issue, we perform some checks. Basically, we adopt advice from (https://michaelwiebe.com/blog/2021/01/amip) and drop 1% of the total observations for checking. In this case, since we have 273 observations, we drop 3 random observations and check whether the coefficient on jinshi density is statistically significant at 1% level.   
