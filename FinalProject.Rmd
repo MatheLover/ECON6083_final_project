@@ -266,25 +266,15 @@ counter # 1000
 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
+# ML Approach 
+We use adaptive lasso to select relevant variables and then perform regressions.
 ```{r}
-# adaptive lasso 
-# baselinemodel <- glm(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)
-baselinemodel <- glmnet(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,intercept=TRUE,alpha=1,lambda=0.00)
+
+# Table 2 col 1 - 4
+baselinemodel <- glmnet(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,intercept=TRUE,alpha=1,lambda=0.00,)
 coef((baselinemodel))
 w=1/abs(coef(baselinemodel)[-1])
-w[1]=0
+# w[1]=0
 w[2:29] = 0
 X=model.matrix(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
 head(X,3)
@@ -295,31 +285,113 @@ post_lasso <- glm(lneduyear~lnjinshipop+factor(provid)+lnnightlight,data=census)
 coef(summary(post_lasso))
 
 
-# lasso
-X=model.matrix(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)
-y <- census$lneduyear
-cv <- cv.glmnet(X, y, alpha = 1)
-lambda_3 <- cv$lambda.1se
-lasso.model <- glmnet(X,y, alpha = 1, lambda = lambda_3)
-lasso.model$beta
-post_lasso <- glm(lneduyear~lnjinshipop+factor(provid)+lnnightlight,data=census)
 
 ```
-# Partial R^2
+
 ```{r}
-post_lasso <- glm(lneduyear~lnjinshipop+factor(provid)+lnnightlight,data=census)
-post_lasso_1 <- glm(lneduyear~lnjinshipop+factor(provid),data=census)
-rsq.partial(post_lasso, post_lasso_1)
+# Table 2 col 5 - 8
+# col 5
+col5 <- glmnet(lnnspop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,intercept=TRUE,alpha=1,lambda=0.00)
+w=1/abs(coef(col5)[-1])
+# w[1]=0
+w[2:29] = 0
+X=model.matrix(lnnspop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
+head(X,3)
+y <- census$lnnspop
+cv_lambda_lasso <- cv.glmnet(lnnspop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
+coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
+post_lasso_5 <- glm(lnnspop~lnjinshipop+factor(provid)+lnnightlight,data=census)
+coef(summary(post_lasso_5))
 
-# Add more 
-income <- read_xlsx("/Users/benchiang/Desktop/Book1.xlsx")
-
-# merge with census data
-merged <- merge(census, income, by="provid")
-table_5 <- lm(lneduyear ~ DISP_INC_CAPITA | provid,data=merged)
-summary(table_5)
 
 
+
+
+
+```
+
+```{r}
+# col 6
+col6 <- glmnet(lnmppop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,intercept=TRUE,alpha=1,lambda=0.00)
+w=1/abs(coef(col6)[-1])
+# w[1]=0
+w[2:29] = 0
+X=model.matrix(lnmppop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
+head(X,3)
+y <- census$lnmppop
+cv_lambda_lasso <- cv.glmnet(lnmppop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
+coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
+post_lasso_6 <- glm(lnmppop~lnjinshipop+factor(provid)+tri,data=census)
+coef(summary(post_lasso_6))
+```
+
+```{r}
+# col 7
+col7 <- glmnet(lnhighpop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,intercept=TRUE,alpha=1,lambda=0.00)
+w=1/abs(coef(col7)[-1])
+# w[1]=0
+w[2:29] = 0
+X=model.matrix(lnhighpop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
+head(X,3)
+y <- census$lnhighpop
+cv_lambda_lasso <- cv.glmnet(lnhighpop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
+coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
+post_lasso_7 <- glm(lnhighpop~lnjinshipop+factor(provid)+lnnightlight,data=census)
+coef(summary(post_lasso_7))
+```
+
+```{r}
+# col 8
+col8 <- glmnet(lnunipop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,intercept=TRUE,alpha=1,lambda=0.00)
+w=1/abs(coef(col8)[-1])
+# w[1]=0
+w[2:29] = 0
+X=model.matrix(lnunipop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
+head(X,3)
+y <- census$lnunipop
+cv_lambda_lasso <- cv.glmnet(lnunipop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
+coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
+post_lasso_8 <- glm(lnunipop~lnjinshipop+factor(provid)+lnnightlight+tri,data=census)
+coef(summary(post_lasso_8))
+```
+
+# Lasso IV coefficients -- 2SLS
+```{r}
+lasso.iv_5 <- rlassoIV(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)|bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census,select.X = TRUE, select.Z = TRUE)
+summary(lasso.iv_5)
+lasso.iv_5$coefficients
+
+# 2nd stage
+Second_5 <- rlasso(lnjinshipop ~ bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
+Second_5 <- which(Second_5$index==TRUE)
+Second_5
+
+lasso.iv_6 <- rlassoIV(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist,data=census,select.X = TRUE, select.Z = TRUE)
+summary(lasso.iv_6)
+lasso.iv_6$coefficients
+
+# 2nd stage 
+Second_6 <- rlasso(lnjinshipop ~ bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist,data=census)
+Second_6 <- which(Second_6$index==TRUE)
+Second_6
+
+lasso.iv_7 <- rlassoIV(lnhighpop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census,select.X = TRUE, select.Z = TRUE)
+summary(lasso.iv_7)
+lasso.iv_7$coefficients
+
+# 2nd stage
+Second_7 <- rlasso(lnjinshipop ~ rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
+Second_7 <- which(Second_7$index==TRUE)
+Second_7
+
+lasso.iv_8 <- rlassoIV(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist| lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census,select.X=TRUE, select.Z=TRUE)
+summary(lasso.iv_8)
+lasso.iv_8$coefficients
+
+# 2nd stage
+Second_8 <- rlasso(lnjinshipop ~ lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census)
+Second_8 <- which(Second_8$index==TRUE)
+Second_8
 
 ```
 
