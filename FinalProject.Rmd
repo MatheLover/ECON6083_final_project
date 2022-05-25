@@ -170,11 +170,11 @@ stargazer(table_2_col6,type="text", title="Table 2 Column 6")
 
 table_2_col7 <- felm(lnhighpop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
 summary(table_2_col7,robust=TRUE)
-stargazer(table_2_col6,type="text", title="Table 2 Column 7")
+stargazer(table_2_col7,type="text", title="Table 2 Column 7")
 
 table_2_col8 <- felm(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
 summary(table_2_col8,robust=TRUE)
-stargazer(table_2_col6,type="text", title="Table 2 Column 8")
+stargazer(table_2_col8,type="text", title="Table 2 Column 8")
 
 ```
 
@@ -282,7 +282,7 @@ y <- census$lneduyear
 cv_lambda_lasso <- cv.glmnet(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
 coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
 post_lasso <- glm(lneduyear~lnjinshipop+factor(provid)+lnnightlight,data=census)
-coef(summary(post_lasso))
+ML_result <- coef(summary(post_lasso))
 
 
 
@@ -301,7 +301,7 @@ y <- census$lnnspop
 cv_lambda_lasso <- cv.glmnet(lnnspop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
 coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
 post_lasso_5 <- glm(lnnspop~lnjinshipop+factor(provid)+lnnightlight,data=census)
-coef(summary(post_lasso_5))
+ML_col5 <- coef(summary(post_lasso_5))
 
 
 
@@ -352,7 +352,7 @@ y <- census$lnunipop
 cv_lambda_lasso <- cv.glmnet(lnunipop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
 coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
 post_lasso_8 <- glm(lnunipop~lnjinshipop+factor(provid)+lnnightlight+tri,data=census)
-coef(summary(post_lasso_8))
+ML_col8 <- coef(summary(post_lasso_8))
 ```
 
 # Lasso IV coefficients -- 2SLS
@@ -394,4 +394,67 @@ Second_8 <- which(Second_8$index==TRUE)
 Second_8
 
 ```
+
+# Table 2 comparisons 
+Column 3
+```{r}
+# Traditional estimate col 3
+result_col3 <- summary(table_2_col3,robust=TRUE)$coef[,1:2]
+
+# ML estimate col 3
+ML_result_2 <- ML_result[c(2,30),1:2]
+ML_result_2 <- as.data.frame(ML_result_2)
+for (i in 1:5){
+  ML_result_2[nrow(ML_result_2)+1,] <- c(0,0)
+}
+colnames(ML_result_2) <- colnames(result_col3) 
+rownames(ML_result_2) <- rownames(result_col3) 
+
+# cbind 
+combined_1 <- cbind(result_col3, ML_result_2)
+colnames(combined_1) <- c("Traditional Estimates", "Traditional SE", "ML Estimate", "ML SE")
+combined_1
+```
+Table 2 Average Years of Schooling: Traditional vs ML methods
+
+Column 5 and 8
+```{r}
+result_col5 <- summary(table_2_col5, robust=TRUE)$coef[,1:2]
+ML_col5_v2 <- ML_col5[c(2,30),1:2]
+ML_col5_2 <- as.data.frame(ML_col5_v2)
+for (i in 1:(nrow(result_col5) - nrow(ML_col5_2))){
+  ML_col5_2[nrow(ML_col5_2)+1,] <- c(0,0)
+}
+colnames(ML_col5_2) <- colnames(result_col5) 
+rownames(ML_col5_2) <- rownames(result_col5) 
+
+# cbind 
+combined_2 <- cbind(result_col5, ML_col5_2)
+colnames(combined_2) <- c("Traditional Estimates", "Traditional SE", "ML Estimate", "ML SE")
+combined_2
+```
+Table 2 Share of Population without education 
+
+
+```{r}
+result_col8 <- summary(table_2_col8, robust=TRUE)$coef[,1:2]
+ML_col8_v2 <- ML_col8[c(2,30),1:2]
+ML_col8_2 <- as.data.frame(ML_col8_v2)
+for (i in 1:(nrow(result_col8) - nrow(ML_col8_2))){
+  ML_col8_2[nrow(ML_col8_2)+1,] <- c(0,0)
+}
+colnames(ML_col8_2) <- colnames(result_col8) 
+rownames(ML_col8_2) <- rownames(result_col8) 
+
+# cbind 
+combined_3 <- cbind(result_col8, ML_col8_2)
+colnames(combined_3) <- c("Traditional Estimates", "Traditional SE", "ML Estimate", "ML SE")
+combined_3
+```
+
+
+
+
+
+
 
