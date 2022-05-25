@@ -191,6 +191,11 @@ iv_6 <- ivreg(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+l
 iv_ROBUST_6 <- coeftest(iv_6,vcov=vcovHC(iv_6, type = "HC0"))
 stargazer(iv_ROBUST_6, type="text")
 
+# first stage
+iv_1st_6 <- lm(lnjinshipop ~ rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
+iv_1st_6_rob <- coeftest(iv_1st_6,vcov=vcovHC(iv_1st_6, type = "HC0"))
+stargazer(iv_1st_6_rob, type="text")
+
 # col 7
 iv_7 <- ivreg(lnhighpop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
 iv_ROBUST_7 <- coeftest(iv_7,vcov=vcovHC(iv_7, type = "HC0"))
@@ -200,6 +205,11 @@ stargazer(iv_ROBUST_7, type="text")
 iv_8 <- ivreg(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist| lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census)
 iv_ROBUST_8 <- coeftest(iv_8,vcov=vcovHC(iv_8, type = "HC0"))
 stargazer(iv_ROBUST_8, type="text")
+
+# first stage
+iv_1st_8 <- lm(lnjinshipop ~ rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
+iv_1st_8_rob <- coeftest(iv_1st_8,vcov=vcovHC(iv_1st_8, type = "HC0"))
+stargazer(iv_1st_8_rob, type="text")
 
 # Reduced Form
 # col 1 
@@ -457,7 +467,7 @@ Table 2 Share of Population with University Education
 # Table 5 comparison(2sls)
 ```{r}
 # Traditional IV col 6 and 8
-sample_iv <- c(0)
+sample_iv <- c(-0.088)
 sample_iv <- as.data.frame((sample_iv))
 colnames(sample_iv) <- c("Traditional coefficient")
 rownames(sample_iv) <- c("bprvdist")
@@ -491,7 +501,7 @@ table_5_1
 
 
 ```{r}
-sample_iv <- c(0)
+sample_iv <- c(-0.088)
 sample_iv <- as.data.frame((sample_iv))
 colnames(sample_iv) <- c("Traditional coefficient")
 rownames(sample_iv) <- c("bprvdist")
