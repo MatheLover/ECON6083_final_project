@@ -361,37 +361,37 @@ lasso.iv_5 <- rlassoIV(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suit
 summary(lasso.iv_5)
 lasso.iv_5$coefficients
 
-# 2nd stage
-Second_5 <- rlasso(lnjinshipop ~ bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
-Second_5 <- which(Second_5$index==TRUE)
-Second_5
+# 1st stage
+First_5 <- rlasso(lnjinshipop ~ bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid) + bprvdist,data=census)
+First_5 <- which(First_5$index==TRUE)
+First_5
 
 lasso.iv_6 <- rlassoIV(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist,data=census,select.X = TRUE, select.Z = TRUE)
 summary(lasso.iv_6)
 lasso.iv_6$coefficients
 
-# 2nd stage 
-Second_6 <- rlasso(lnjinshipop ~ bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist,data=census)
-Second_6 <- which(Second_6$index==TRUE)
-Second_6
+# 1st stage 
+First_6 <- rlasso(lnjinshipop ~ bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist+ bprvdist,data=census)
+which(First_6$index==TRUE)
+First_6
 
 lasso.iv_7 <- rlassoIV(lnhighpop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census,select.X = TRUE, select.Z = TRUE)
 summary(lasso.iv_7)
 lasso.iv_7$coefficients
 
-# 2nd stage
-Second_7 <- rlasso(lnjinshipop ~ rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
-Second_7 <- which(Second_7$index==TRUE)
-Second_7
+# 1st stage
+First_7 <- rlasso(lnjinshipop ~ rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ bprvdist,data=census)
+which(First_7$index==TRUE)
+First_7
 
 lasso.iv_8 <- rlassoIV(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist| lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census,select.X=TRUE, select.Z=TRUE)
 summary(lasso.iv_8)
 lasso.iv_8$coefficients
 
-# 2nd stage
-Second_8 <- rlasso(lnjinshipop ~ lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census)
-Second_8 <- which(Second_8$index==TRUE)
-Second_8
+# 1st stage
+First_8 <- rlasso(lnjinshipop ~ lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census)
+which(First_8$index==TRUE)
+First_8
 
 ```
 
@@ -451,8 +451,22 @@ combined_3 <- cbind(result_col8, ML_col8_2)
 colnames(combined_3) <- c("Traditional Estimates", "Traditional SE", "ML Estimate", "ML SE")
 combined_3
 ```
+Table 2 Share of Population with University Education 
 
 
+# Table 5 comparison(2sls)
+```{r}
+# Traditional IV col 6 and 8
+col6_iv <- iv_ROBUST_6[c(2,36),1:2]
+col8_iv <- iv_ROBUST_8[c(2,36),1:2]
+
+# ML
+col6_iv_ml <- 
+summary(First_6)$coef[,1]
+
+
+
+```
 
 
 
