@@ -457,14 +457,70 @@ Table 2 Share of Population with University Education
 # Table 5 comparison(2sls)
 ```{r}
 # Traditional IV col 6 and 8
-col6_iv <- iv_ROBUST_6[c(2,36),1:2]
-col8_iv <- iv_ROBUST_8[c(2,36),1:2]
+sample_iv <- c(0)
+sample_iv <- as.data.frame((sample_iv))
+colnames(sample_iv) <- c("Traditional coefficient")
+rownames(sample_iv) <- c("bprvdist")
+col6_iv <- iv_ROBUST_6[c(2),1]
+col6_iv <- as.data.frame(col6_iv)
+rownames(col6_iv) <- c("lnjinshipop")
+colnames(col6_iv) <- c("Traditional coefficient")
+col6_iv <- rbind(sample_iv, col6_iv)
+
+
 
 # ML
-col6_iv_ml <- 
-summary(First_6)$coef[,1]
+# col 6 
+df <- as.data.frame(First_6$coefficients)
+df_1 <- as.data.frame(df[2,1])
+rownames(df_1) <- c("bprvdist")
+colnames(df_1) <- c("ML coefficient")
+
+# jinshi coefficient 
+df_2 <- as.data.frame(lasso.iv_6$coefficients)
+colnames(df_2) <- c("ML coefficient")
+rownames(df_2) <- c("lnjinshipop")
+
+# rbind 
+rbind_6 <- rbind(df_1, df_2)  
+
+# Final table 
+table_5_1 <- cbind(col6_iv, rbind_6)
+table_5_1
+```
 
 
+```{r}
+sample_iv <- c(0)
+sample_iv <- as.data.frame((sample_iv))
+colnames(sample_iv) <- c("Traditional coefficient")
+rownames(sample_iv) <- c("bprvdist")
+col8_iv <- iv_ROBUST_8[c(2),1]
+col8_iv <- as.data.frame(col8_iv)
+rownames(col8_iv) <- c("lnjinshipop")
+colnames(col8_iv) <- c("Traditional coefficient")
+col8_iv <- rbind(sample_iv, col8_iv)
+
+
+
+# ML
+# col 8
+df <- as.data.frame(First_8$coefficients)
+df_8 <- as.data.frame(df[36,1])
+rownames(df_8) <- c("bprvdist")
+colnames(df_8) <- c("ML coefficient")
+
+# jinshi coefficient 
+df_9 <- as.data.frame(lasso.iv_8$coefficients)
+colnames(df_9) <- c("ML coefficient")
+rownames(df_9) <- c("lnjinshipop")
+
+# rbind 
+rbind_9 <- rbind(df_8, df_9)  
+
+# Final table 
+table_8_1 <- cbind(col8_iv, rbind_9)
+table_8_1
 
 ```
 
