@@ -183,43 +183,43 @@ IV Regression
 # 2SLS
 # col 5
 iv_5 <- ivreg(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)|bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
-iv_ROBUST_5 <- coeftest(iv,vcov=vcovHC(iv, type = "HC0"))
+iv_ROBUST_5 <- coeftest(iv_5,vcov=vcovHC(iv_5, type = "HC0"))
 stargazer(iv_ROBUST_5, type="text")
 
 # col 6
 iv_6 <- ivreg(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
-iv_ROBUST_6 <- coeftest(iv,vcov=vcovHC(iv, type = "HC0"))
+iv_ROBUST_6 <- coeftest(iv_6,vcov=vcovHC(iv_6, type = "HC0"))
 stargazer(iv_ROBUST_6, type="text")
 
 # col 7
 iv_7 <- ivreg(lnhighpop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
-iv_ROBUST_7 <- coeftest(iv,vcov=vcovHC(iv, type = "HC0"))
+iv_ROBUST_7 <- coeftest(iv_7,vcov=vcovHC(iv_7, type = "HC0"))
 stargazer(iv_ROBUST_7, type="text")
 
 # col 8
 iv_8 <- ivreg(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist| lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census)
-iv_ROBUST_8 <- coeftest(iv,vcov=vcovHC(iv, type = "HC0"))
+iv_ROBUST_8 <- coeftest(iv_8,vcov=vcovHC(iv_8, type = "HC0"))
 stargazer(iv_ROBUST_8, type="text")
 
 # Reduced Form
 # col 1 
 rf_1 <- lm(lneduyear ~ bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
-rf_1 <- coeftest(rf_1,vcov=vcovHC(iv, type = "HC0")) # disapperance of bprvdist if we run this line
+rf_1 <- coeftest(rf_1,vcov=vcovHC(rf_1, type = "HC0")) # disapperance of bprvdist if we run this line
 stargazer(rf_1, type="text")
 
 # col 2
 rf_2 <- lm(lneduyear ~ bprvdist+rvrdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
-rf_2 <- coeftest(rf_1,vcov=vcovHC(iv, type = "HC0"))
+rf_2 <- coeftest(rf_2,vcov=vcovHC(rf_2, type = "HC0"))
 stargazer(rf_2, type="text")
 
 # col 3
 rf_3 <- lm(lnhighpop ~ bprvdist+rvrdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
-rf_3 <- coeftest(rf_3,vcov=vcovHC(iv, type = "HC0")) # disapperance of bprvdist if we run this line
+rf_3 <- coeftest(rf_3,vcov=vcovHC(rf_3, type = "HC0")) # disapperance of bprvdist if we run this line
 stargazer(rf_3, type="text")
 
 # col 4 
 rf_4 <- lm(lnhighpop ~ bprvdist+rvrdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
-rf_4 <- coeftest(rf_4,vcov=vcovHC(iv, type = "HC0")) # disapperance of bprvdist if we run this line
+rf_4 <- coeftest(rf_4,vcov=vcovHC(rf_4, type = "HC0")) # disapperance of bprvdist if we run this line
 stargazer(rf_4, type="text")
 
 
