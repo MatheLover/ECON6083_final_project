@@ -8,10 +8,15 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+## Research Motivation
+
+‘‘Long Live Keju! The Persistent Effects of China's Civil Examination System.’’ is the paper for our research project. Keju was the civil examination system in the Ming-Qing period of China for more than a hundred years now. Jinshi was the highest qualification that could be obtained in the Keju system. This academic paper suggests that the historical success in Keju has a positive impact on the contemporary human capital outcomes due to cultural transmission, educational infrastructure and the difference in social capital. It uses the variation in the density of Jinshi as the proxy regressor for this effect and accordingly to analyze the effect on the years of schooling in 2010. The scholars mention that there is a positive correlation between the density of Jinshi and the years of schooling in China today, a doubling of Jinshi per 10,000 population leads to an 8.5% increase in years of schooling in 2010. However, the Keju was the previous examination system for more than a hundred years now, the correlation between an ancient examination system (which has been replaced) and the years of schooling in China today can be doubtful. Moreover, the scholars acknowledge that the cause and the effect are most at salient at national level and their findings cannot be established as direct evidence to bear upon how the civil exam system affected China as a whole, which further motivates this paper to be worth analyzing.
+
+## Research Question
+
+The model suggested by the paper: yi = βkejui + γ1Xci+ γ2Xhi+ αp + εi , where i indexes a prefecture; the dependent variable yi means the average years of schooling measured at the prefecture level. αp denotes province fixed effects. Xci is a control variable of a number of covariates that may impact the contemporary years of schooling. Xhi is another control variable of historical changes that may correlate with the contemporary years of schooling. We are doubted the positive correlation between the density of Jinshi and the average years of schooling in China today, Lasso can help identify the regressors relevant to the dependent variable. Thus, we will use the Lasso technique for variable selection in this project to observe whether the results would be consistent with the paper. After this project, we hope our analysis can help to check the accuracy of the model suggested by the paper, which may assist to improve the understanding of Keju’s human capital outcomes in China today.
 
 ## Package
-
-
 ```{r cars}
 suppressPackageStartupMessages({
   library(foreign)
@@ -42,8 +47,8 @@ library(rsq)
 library(readxl)
 ```
 
-# Dataset Checking 
-We need to ensure that data is free from errors. So we check several important variables which may contain outliers and other abnormal values. 
+# Dataset Description 
+To verify the causal relationship between human capital outcomes and jinshi density, we have the following relevant variables: 
 
 1. provid (in GB code) -- https://sedac.ciesin.columbia.edu/downloads/docs/cddc/gbcodeplist.txt 
 2. lneduyear -- average years of schooling in log scale 
@@ -53,6 +58,8 @@ We need to ensure that data is free from errors. So we check several important v
 6. lnmppop -- Share of population with elementary and secondary school education
 7. lnpopqing -- population density 
 8. lnofficialqing -- number of qing official in log scale 
+
+We need to ensure that data is free from errors. So we check whether the above variables may contain outliers and other abnormal values. 
 
 Potential Problems
 1. Why is the number of qing officials can be 0.x sth if we use the min lnofficialqing to calculate? 
@@ -142,41 +149,63 @@ We will implement based on felm() approach.
 table_2_col1 <- felm(lneduyear ~ lnjinshipop | provid ,data=census)
 summary(table_2_col1,robust=TRUE)
 a <- stargazer(table_2_col1,type="text", title="Table 2 Column 1")
+```
+The coefficient, SE, significance level are the same as table 2 column 1. 
 
+```{r}
 # table 2 column 2
 table_2_col2 <- felm(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri| provid ,data=census)
 summary(table_2_col2,robust=TRUE)
 b <- stargazer(table_2_col2,type="text", title="Table 2 Column 2")
+```
+The coefficient, SE, significance level are roughly the same as table 2 column 2. 
 
+```{r}
 # table 2 column 3
 # lnpopming result is strange a litte bit 
 table_2_col3 <- felm(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
 summary(table_2_col3,robust=TRUE)
 stargazer(table_2_col3,type="text", title="Table 2 Column 3")
+```
+The coefficient, SE, significance level are roughly the same as table 2 column 3. 
 
+```{r}
 # table 2 column 4
 table_2_col4 <- felm(lneduyear ~ lnjinshipopm+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
 summary(table_2_col4,robust=TRUE)
 stargazer(table_2_col4,type="text", title="Table 2 Column 4")
+```
+The coefficient, SE, significance level are roughly the same as table 2 column 4. 
 
+```{r}
 # Dependent variable -- Share of population with (* 100, logged)
 table_2_col5 <- felm(lnnspop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
 summary(table_2_col5,robust=TRUE)
 stargazer(table_2_col5,type="text", title="Table 2 Column 5")
+```
+The coefficient, SE, significance level are roughly the same as table 2 column 5. 
 
+```{r}
 table_2_col6 <- felm(lnmppop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
 summary(table_2_col6,robust=TRUE)
 stargazer(table_2_col6,type="text", title="Table 2 Column 6")
+```
+The coefficient, SE, significance level are roughly the same as table 2 column 6
 
+```{r}
 table_2_col7 <- felm(lnhighpop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
 summary(table_2_col7,robust=TRUE)
 stargazer(table_2_col7,type="text", title="Table 2 Column 7")
+```
+The coefficient, SE, significance level are roughly the same as table 2 column 7
 
+```{r}
 table_2_col8 <- felm(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates| provid ,data=census)
 summary(table_2_col8,robust=TRUE)
 stargazer(table_2_col8,type="text", title="Table 2 Column 8")
 
 ```
+The coefficient, SE, significance level are roughly the same as table 2 column 8
 
 IV Regression
 ```{r}
