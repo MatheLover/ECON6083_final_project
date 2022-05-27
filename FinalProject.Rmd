@@ -429,6 +429,10 @@ We believe lnnightlight is not solely a control variable and it definitely affec
 
 And we wish authors to examine which factor -- nightlight vs jinshi pop -- affects human capital outcomes to a greater extent not only from the comparison between coefficients in scale but from common sense? It seems that they currently don't have such a discussion. 
 
+2. Noise issue
+
+We know that the authors have taken into consideration the presence of noise, which definitely complicates the task of evaluating the relationship between jinshipop and human capital outcomes, and included many noise variables. Yet, we don't know how to incorporate those vars into regressions and nor do they discuss the issue in Readme.pdf. Thus, it is a pity that we have to accept that noises should not be neglected, which makes us cast doubt on the causal relationship between jinshipop and human capital outcomes.  
+
 # Lasso IV coefficients -- 2SLS
 ```{r}
 lasso.iv_5 <- rlassoIV(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)|bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census,select.X = TRUE, select.Z = TRUE)
