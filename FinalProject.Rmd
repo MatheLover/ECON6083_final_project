@@ -441,37 +441,44 @@ lasso.iv_5$coefficients
 
 # 1st stage
 First_5 <- rlasso(lnjinshipop ~ bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid) + bprvdist,data=census)
-First_5 <- which(First_5$index==TRUE)
-First_5
+as.data.frame(First_5$coefficients[First_5$coefficients != 0])
 
+```
+
+
+```{r}
 lasso.iv_6 <- rlassoIV(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist,data=census,select.X = TRUE, select.Z = TRUE)
 summary(lasso.iv_6)
 lasso.iv_6$coefficients
 
 # 1st stage 
 First_6 <- rlasso(lnjinshipop ~ bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist+ bprvdist,data=census)
-which(First_6$index==TRUE)
-First_6
+as.data.frame(First_6$coefficients[First_6$coefficients != 0])
+```
 
+
+```{r}
 lasso.iv_7 <- rlassoIV(lnhighpop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census,select.X = TRUE, select.Z = TRUE)
 summary(lasso.iv_7)
 lasso.iv_7$coefficients
 
 # 1st stage
 First_7 <- rlasso(lnjinshipop ~ rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ bprvdist,data=census)
-which(First_7$index==TRUE)
-First_7
+as.data.frame(First_7$coefficients[First_7$coefficients != 0])
+```
 
+
+```{r}
 lasso.iv_8 <- rlassoIV(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist| lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census,select.X=TRUE, select.Z=TRUE)
 summary(lasso.iv_8)
 lasso.iv_8$coefficients
 
 # 1st stage
 First_8 <- rlasso(lnjinshipop ~ lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census)
-which(First_8$index==TRUE)
-First_8
-
+as.data.frame(First_8$coefficients[First_8$coefficients != 0])
 ```
+The estimates are roughly the same compared to the original table.
+
 
 # Table 2 comparisons 
 Column 3
