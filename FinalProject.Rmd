@@ -149,6 +149,7 @@ We will implement based on felm() approach.
 table_2_col1 <- felm(lneduyear ~ lnjinshipop | provid ,data=census)
 summary(table_2_col1,robust=TRUE)
 a <- stargazer(table_2_col1,type="text", title="Table 2 Column 1")
+
 ```
 The coefficient, SE, significance level are the same as table 2 column 1. 
 
@@ -214,7 +215,10 @@ IV Regression
 iv_5 <- ivreg(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)|bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
 iv_ROBUST_5 <- coeftest(iv_5,vcov=vcovHC(iv_5, type = "HC0"))
 stargazer(iv_ROBUST_5, type="text")
+```
+The coefficient on jinshi density is roughly the same as in table 5 column 5 and statistically significant at 1% level.   
 
+```{r}
 # col 6
 iv_6 <- ivreg(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
 iv_ROBUST_6 <- coeftest(iv_6,vcov=vcovHC(iv_6, type = "HC0"))
@@ -224,12 +228,18 @@ stargazer(iv_ROBUST_6, type="text")
 iv_1st_6 <- lm(lnjinshipop ~ rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
 iv_1st_6_rob <- coeftest(iv_1st_6,vcov=vcovHC(iv_1st_6, type = "HC0"))
 stargazer(iv_1st_6_rob, type="text")
+```
+The coefficients are roughly the same as in table 5 column 6.
 
+```{r}
 # col 7
 iv_7 <- ivreg(lnhighpop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
 iv_ROBUST_7 <- coeftest(iv_7,vcov=vcovHC(iv_7, type = "HC0"))
 stargazer(iv_ROBUST_7, type="text")
+```
+The coefficients are roughly the same as in table 5 column 7.
 
+```{r}
 # col 8
 iv_8 <- ivreg(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist| lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census)
 iv_ROBUST_8 <- coeftest(iv_8,vcov=vcovHC(iv_8, type = "HC0"))
@@ -239,23 +249,35 @@ stargazer(iv_ROBUST_8, type="text")
 iv_1st_8 <- lm(lnjinshipop ~ rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
 iv_1st_8_rob <- coeftest(iv_1st_8,vcov=vcovHC(iv_1st_8, type = "HC0"))
 stargazer(iv_1st_8_rob, type="text")
+```
+The coefficients are roughly the same as in table 5 column 8.
 
+```{r}
 # Reduced Form
 # col 1 
 rf_1 <- lm(lneduyear ~ bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
 rf_1 <- coeftest(rf_1,vcov=vcovHC(rf_1, type = "HC0")) # disapperance of bprvdist if we run this line
 stargazer(rf_1, type="text")
+```
+The coefficients are roughly the same as in table 5 column 1.
 
+```{r}
 # col 2
 rf_2 <- lm(lneduyear ~ bprvdist+rvrdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
 rf_2 <- coeftest(rf_2,vcov=vcovHC(rf_2, type = "HC0"))
 stargazer(rf_2, type="text")
+```
+The coefficients are roughly the same as in table 5 column 2.
 
+```{r}
 # col 3
 rf_3 <- lm(lnhighpop ~ bprvdist+rvrdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
 rf_3 <- coeftest(rf_3,vcov=vcovHC(rf_3, type = "HC0")) # disapperance of bprvdist if we run this line
 stargazer(rf_3, type="text")
+```
+The coefficients are roughly the same as in table 5 column 3.
 
+```{r}
 # col 4 
 rf_4 <- lm(lnhighpop ~ bprvdist+rvrdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census)
 rf_4 <- coeftest(rf_4,vcov=vcovHC(rf_4, type = "HC0")) # disapperance of bprvdist if we run this line
@@ -264,12 +286,12 @@ stargazer(rf_4, type="text")
 
 ```
 
+The coefficients are roughly the same as in table 5 column 4. 
 
 
 
-
-# Result check
-1. To detect if there is any p-hacking issue, we perform some checks. Basically, we adopt advice from (https://michaelwiebe.com/blog/2021/01/amip) and drop 1% of the total observations for checking. In this case, since we have 273 observations, we drop 3 random observations and check whether the coefficient on jinshi density is statistically significant at 1% level.   
+# Micellaneous: P-hacking check
+1. To detect if there is any p-hacking issue, we perform some checks. Basically, we adopt advice from (https://michaelwiebe.com/blog/2021/01/amip) and drop 1% of the total observations for checking. In this case, since we have 273 observations, we drop 3 random observations, iterate 1000 times, and check whether the coefficient on jinshi density is statistically significant at 1% level.   
 
 Result: it turns out if we randomly drop 3 observations each time and we repeat 1000 times, the coefficient on jinshi density is always 1% statistically significant each time. 
 
@@ -306,26 +328,26 @@ counter # 1000
 ```
 
 # ML Approach 
-We use adaptive lasso to select relevant variables and then perform regressions.
+We use adaptive lasso to select relevant variables and then perform regressions. Basically, we set weight for provid to be 0.
 ```{r}
 
 # Table 2 col 1 - 4
 baselinemodel <- glmnet(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,intercept=TRUE,alpha=1,lambda=0.00,)
-coef((baselinemodel))
+#coef((baselinemodel))
 w=1/abs(coef(baselinemodel)[-1])
 # w[1]=0
 w[2:29] = 0
-X=model.matrix(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
-head(X,3)
+X <- model.matrix(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
 y <- census$lneduyear
 cv_lambda_lasso <- cv.glmnet(lneduyear~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
-coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
+#coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
 post_lasso <- glm(lneduyear~lnjinshipop+factor(provid)+lnnightlight,data=census)
 ML_result <- coef(summary(post_lasso))
-
+ML_result
 
 
 ```
+After the post-lasso regression, we find that only two variables lnjinshipop and lnnightlight are relevant and statistically significant. Yet, one thing also worth noticing is that the intercept is also statistically significant and the t-value is super big. So this also hints that the noises also affect the average years of schooling drastically.
 
 ```{r}
 # Table 2 col 5 - 8
@@ -334,14 +356,13 @@ col5 <- glmnet(lnnspop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+s
 w=1/abs(coef(col5)[-1])
 # w[1]=0
 w[2:29] = 0
-X=model.matrix(lnnspop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
-head(X,3)
+X<-model.matrix(lnnspop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
 y <- census$lnnspop
 cv_lambda_lasso <- cv.glmnet(lnnspop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
-coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
+# coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
 post_lasso_5 <- glm(lnnspop~lnjinshipop+factor(provid)+lnnightlight,data=census)
 ML_col5 <- coef(summary(post_lasso_5))
-
+ML_col5
 
 
 
@@ -355,11 +376,10 @@ col6 <- glmnet(lnmppop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+s
 w=1/abs(coef(col6)[-1])
 # w[1]=0
 w[2:29] = 0
-X=model.matrix(lnmppop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
-head(X,3)
+X<-model.matrix(lnmppop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
 y <- census$lnmppop
 cv_lambda_lasso <- cv.glmnet(lnmppop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
-coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
+#coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
 post_lasso_6 <- glm(lnmppop~lnjinshipop+factor(provid)+tri,data=census)
 coef(summary(post_lasso_6))
 ```
@@ -370,11 +390,10 @@ col7 <- glmnet(lnhighpop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri
 w=1/abs(coef(col7)[-1])
 # w[1]=0
 w[2:29] = 0
-X=model.matrix(lnhighpop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
-head(X,3)
+X<-model.matrix(lnhighpop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
 y <- census$lnhighpop
 cv_lambda_lasso <- cv.glmnet(lnhighpop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
-coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
+#coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
 post_lasso_7 <- glm(lnhighpop~lnjinshipop+factor(provid)+lnnightlight,data=census)
 coef(summary(post_lasso_7))
 ```
@@ -385,14 +404,30 @@ col8 <- glmnet(lnunipop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+
 w=1/abs(coef(col8)[-1])
 # w[1]=0
 w[2:29] = 0
-X=model.matrix(lnunipop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
-head(X,3)
+X <- model.matrix(lnunipop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census)[,-1]
 y <- census$lnunipop
 cv_lambda_lasso <- cv.glmnet(lnunipop~lnjinshipop+factor(provid)+lnnightlight+lncoastdist+tri+suitability+urbanrates+lnpopming,data=census,standardize=FALSE,alpha = 1,penalty.factor=w, intercept=TRUE)
-coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
+#coef(cv_lambda_lasso,s=cv_lambda_lasso$lambda.1se)
 post_lasso_8 <- glm(lnunipop~lnjinshipop+factor(provid)+lnnightlight+tri,data=census)
 ML_col8 <- coef(summary(post_lasso_8))
+ML_col8
 ```
+From col 5 to 8, similar to the case in average years of schooling, in most cases, lnnightlight and jinshi density are selected by LASSO and intercept is mostly statistically significant. In other situation, terrain may also be chosen. 
+
+
+Thus, from col 1 to 8, we have some questions:
+
+1. If lnnightlight and jinshi density are selected nearly every time when we perform lasso, what would happen if regress lneduyear on lnnightlight? 
+
+```{r}
+table_2_col_nl <- felm(lneduyear ~ lnnightlight | provid ,data=census)
+z <- stargazer(table_2_col_nl,type="text", title="Night Light Check")
+```
+From the table, we know that the coefficient on lnnightlight is 0.072, which is not far from 0.092 for lnjinshipop. Indeed, the data from the above col 1-8 also suggest that the difference between the coef on lnnightlight and lnjinshipop is very small, though the cofficient on lnjinshipop has a larger scale. Is lnnightlight merely a control variable? 
+
+We believe lnnightlight is not solely a control variable and it definitely affects average years of schooling as well as share of population with different educ levels.And this makes sense, because night-time lights measure economic prosperity and people in more affluent areas are more likely and willing to invest in human capital, which means studying longer and obtaining higher degrees at schools.
+
+And we wish authors to examine which factor -- nightlight vs jinshi pop -- affects human capital outcomes to a greater extent not only from the comparison between coefficients in scale but from common sense? It seems that they currently don't have such a discussion. 
 
 # Lasso IV coefficients -- 2SLS
 ```{r}
