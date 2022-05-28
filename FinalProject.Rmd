@@ -631,7 +631,7 @@ Yet, we do have some questions that may cause disturbance to the results:
 
 2. Is nightlight solely a control variable? Would economic prosperity implied by nightlight affect human capital outcomes more significantly?
 
-3. There are too much noise in the regressions. How do authors solve this issue? What should we do to replicate their findings if we want to consider noise issues? Would the study cover such a long historical period that the noises get too high?
+3. There are too much noise in the regressions. How do authors solve this issue? What should we do to replicate their findings if we want to consider noise issues? Would the study be better if it covers shorter period which is not too far from the year when last Keju exam so that the noises get lower? And in fact, such outcomes may be more convincing as the modern human capital outcomes are dependent on many other factors(e.g. family wealth, labor markets) not necessarily because of keju traditions and subject to many great historical events(e.g. cultural revolutions).
 
 
 
