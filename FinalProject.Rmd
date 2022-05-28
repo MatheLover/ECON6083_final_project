@@ -542,7 +542,7 @@ Table 2 Share of Population with University Education
 
 Summary: Overall speaking, ML and traditional statistical methods give roughly the same estimates with similar SEs. And ML approach is more rigorous in terms of variable selection, picking jinshi population density and night light only. Practically speaking, this selection makes perfect sense as nowadays economic prosperity implied by night light acts as an indicator of family wealth in that region and more wealthy families can and are more willing to study longer at schools and obtain higher degrees. Therefore, nighlight should be one of the most important factors determining human capital outcomes among the remaining control variables.      
 
-# Table 5 comparison(2sls)
+# Table 5 comparison(2sls)  -- Col 6 and 8
 ```{r}
 # Traditional IV col 6 and 8
 sample_iv <- c(-0.088)
@@ -576,7 +576,7 @@ rbind_6 <- rbind(df_1, df_2)
 table_5_1 <- cbind(col6_iv, rbind_6)
 table_5_1
 ```
-
+Column  6: Average Years of Schooling
 
 ```{r}
 sample_iv <- c(-0.088)
@@ -611,11 +611,29 @@ table_8_1 <- cbind(col8_iv, rbind_9)
 table_8_1
 
 ```
-Summary: The two tables give roughly the same estimates of bprvdist and lnjinshipop, suggesting that ML approach can also be a effective strategy apart from traditional regressions.
+Column 8: Share of Population with (*100 logged) 
+
+Summary: The two tables give roughly the same estimates of bprvdist and lnjinshipop, suggesting that ML approach can also be a effective strategy apart from traditional regressions. From the results, we know that 
 
 
 # Conclusion
-In this project, we study 
+In this project, we study the paper ‘‘Long Live Keju! The Persistent Effects of China's Civil Examination System.’’. From our analysis above, there are two key findings we concur with the two authors: 
+
+1. The jinshi density affects human capital outcomes(average years of schooling and share of population with higher education level) positively. 
+
+2. River distance to bamboo/pine influences the jinshi density.
+
+The ML approach we adopt, in every case, gives very similar results to their traditional approaches. And in some cases, our ML approach even selects the most relevant variable.
+
+Yet, we do have some questions that may cause disturbance to the results:
+
+1. Lack of raw dataset on Chinese populations and jinshi populations
+
+2. Is nightlight solely a control variable? Would economic prosperity implied by nightlight affect human capital outcomes more significantly?
+
+3. There are too much noise in the regressions. How do authors solve this issue? What should we do to replicate their findings if we want to consider noise issues? Would the study cover such a long historical period that the noises get too high?
+
+
 
 
 
