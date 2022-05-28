@@ -425,15 +425,15 @@ z <- stargazer(table_2_col_nl,type="text", title="Night Light Check")
 ```
 From the table, we know that the coefficient on lnnightlight is 0.072, which is not far from 0.092 for lnjinshipop. Indeed, the data from the above col 1-8 also suggest that the difference between the coef on lnnightlight and lnjinshipop is very small, though the cofficient on lnjinshipop has a larger scale. Is lnnightlight merely a control variable? 
 
-We believe lnnightlight is not solely a control variable and it definitely affects average years of schooling as well as share of population with different educ levels.And this makes sense, because night-time lights measure economic prosperity and people in more affluent areas are more likely and willing to invest in human capital, which means studying longer and obtaining higher degrees at schools.
+Perhaps lnnightlight is not solely a control variable and it definitely affects average years of schooling as well as share of population with different educ levels.And this makes sense, because night-time lights measure economic prosperity and people in more affluent areas are more likely and willing to invest in human capital, which means studying longer and obtaining higher degrees at schools.
 
-And we wish authors to examine which factor -- nightlight vs jinshi pop -- affects human capital outcomes to a greater extent not only from the comparison between coefficients in scale but from common sense? It seems that they currently don't have such a discussion. 
+And further explanation examining which factor -- nightlight vs jinshi pop -- affects human capital outcomes to a greater extent not only from the comparison between coefficients in scale but from common sense? It seems that they currently don't have such a discussion. 
 
 2. Noise issue
 
 We know that the authors have taken into consideration the presence of noise, which definitely complicates the task of evaluating the relationship between jinshipop and human capital outcomes, and included many noise variables. Yet, we don't know how to incorporate those vars into regressions and nor do they discuss the issue in Readme.pdf. Thus, it is a pity that we have to accept that noises should not be neglected, which makes us cast doubt on the causal relationship between jinshipop and human capital outcomes.  
 
-# Lasso IV coefficients -- 2SLS
+# Lasso IV coefficients -- 2SLS -- Table 5 col 5 to 8
 ```{r}
 lasso.iv_5 <- rlassoIV(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)|bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census,select.X = TRUE, select.Z = TRUE)
 summary(lasso.iv_5)
@@ -444,7 +444,7 @@ First_5 <- rlasso(lnjinshipop ~ bprvdist+lnnightlight+lncoastdist+tri+suitabilit
 as.data.frame(First_5$coefficients[First_5$coefficients != 0])
 
 ```
-
+Table 5 Column 5
 
 ```{r}
 lasso.iv_6 <- rlassoIV(lneduyear ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist,data=census,select.X = TRUE, select.Z = TRUE)
@@ -455,7 +455,7 @@ lasso.iv_6$coefficients
 First_6 <- rlasso(lnjinshipop ~ bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist+ bprvdist,data=census)
 as.data.frame(First_6$coefficients[First_6$coefficients != 0])
 ```
-
+Table 5 Column 6
 
 ```{r}
 lasso.iv_7 <- rlassoIV(lnhighpop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist|rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid),data=census,select.X = TRUE, select.Z = TRUE)
@@ -466,7 +466,7 @@ lasso.iv_7$coefficients
 First_7 <- rlasso(lnjinshipop ~ rvrdist+bprvdist+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ bprvdist,data=census)
 as.data.frame(First_7$coefficients[First_7$coefficients != 0])
 ```
-
+Table 5 Column 7
 
 ```{r}
 lasso.iv_8 <- rlassoIV(lnunipop ~ lnjinshipop+lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+rvrdist| lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census,select.X=TRUE, select.Z=TRUE)
@@ -477,7 +477,9 @@ lasso.iv_8$coefficients
 First_8 <- rlasso(lnjinshipop ~ lnnightlight+lncoastdist+tri+suitability+lnpopqing+urbanrates+as.factor(provid)+ rvrdist + bprvdist,data=census)
 as.data.frame(First_8$coefficients[First_8$coefficients != 0])
 ```
-The estimates are roughly the same compared to the original table.
+Table 5 Column 8
+
+Summary: The estimates are roughly the same compared to the original table. Yet, one interesting to point out is that the first stage results are the same in each case. Is it just a coincidence?  We believe the results are expected as  river distance to bamboo/pine affects jinshi density in the same manner no matter what the dependent variables are.
 
 
 # Table 2 comparisons 
@@ -538,6 +540,7 @@ combined_3
 ```
 Table 2 Share of Population with University Education 
 
+Summary: Overall speaking, ML and traditional statistical methods give roughly the same estimates with similar SEs. And ML approach is more rigorous in terms of variable selection, picking jinshi population density and night light only. Practically speaking, this selection makes perfect sense as nowadays economic prosperity implied by night light acts as an indicator of family wealth in that region and more wealthy families can and are more willing to study longer at schools and obtain higher degrees. Therefore, nighlight should be one of the most important factors determining human capital outcomes among the remaining control variables.      
 
 # Table 5 comparison(2sls)
 ```{r}
@@ -608,7 +611,11 @@ table_8_1 <- cbind(col8_iv, rbind_9)
 table_8_1
 
 ```
+Summary: The two tables give roughly the same estimates of bprvdist and lnjinshipop, suggesting that ML approach can also be a effective strategy apart from traditional regressions.
 
+
+# Conclusion
+In this project, we study 
 
 
 
